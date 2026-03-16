@@ -1,9 +1,10 @@
 //
 //  main.c
-//  test1
+//  sets
 //
-//  Created by 匡萍 on 2026/3/13.
+//  Created by 匡萍 on 2026/3/16.
 //
+
 #include <stdio.h>      // 标准输入输出库（如printf、scanf、getchar、putchar）
 #include <stdlib.h>     // 通用工具库（如malloc、free、rand、system）
 #include <string.h>     // 字符串处理库（如memset、memcpy、strlen）
@@ -11,10 +12,10 @@
 #include <time.h>       // 时间处理库（如time、srand）
 #include <unistd.h>     // Unix标准库（如sleep、getpid，Windows下可能需要替换）
 
-//                !!! Ciallo~ !!!               //
+//                          !!! Ciallo~ !!!                             //
 //C indicates a luminous linguistic orientation~//
 
-#define I inline // 内联函数标记，用I代替inline，简化代码书写
+#define In inline // 内联函数标记，用I代替inline，简化代码书写
 #define max(a,b) ((a)>(b)?(a):(b)) // 自定义最大值函数，返回a和b中较大的数
 #define min(a,b) ((a)<(b)?(a):(b)) // 自定义最小值函数，返回a和b中较小的数
 #define abs(x) ((x)>0?(x):-(x)) // 自定义绝对值函数，返回x的绝对值（注意：原代码对负数0处理无影响，仅针对整数）
@@ -36,17 +37,48 @@
 #define Pc(x) putchar(x) // 用Pc(x)代替putchar(x)，简化字符输出操作
 typedef struct Objest
 {
-    
+    ll num;
 }Object;
 int cmp(const void *e1,const void *e2)
 {
     const Object *s1=(const void *)e1;
     const Object *s2=(const void *)e2;
-    return -1;
+    return s1->num - s2->num ;
 }
-
+ll a[1000009];
+ll b[1000009];
 int main()
 {
-    
+    int i=0;
+    while(1)
+    {
+        scanf("%lld",&a[i]);
+        if(a[i]==-1)
+        {
+            break;
+        }
+        i++;
+    }
+    int n=i;
+    int j=0;
+    while(1)
+    {
+        int num;
+        scanf("%d",&num);
+        if(num==-1)
+        {
+            break;
+        }
+        b[num]=1;
+        j++;
+    }
+    for(int k=0;k<n;k++)
+    {
+        if(b[a[k]]!=1)
+        {
+            printf("%lld ",a[k]);
+        }
+    }
+    printf("\n");
     return 0;
 }

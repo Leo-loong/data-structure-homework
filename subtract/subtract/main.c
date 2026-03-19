@@ -1,8 +1,8 @@
 //
 //  main.c
-//  example1c
+//  subtract
 //
-//  Created by 匡萍 on 2026/3/17.
+//  Created by 匡萍 on 2026/3/19.
 //
 
 #include <stdio.h>      // 标准输入输出库（如printf、scanf、getchar、putchar）
@@ -45,98 +45,98 @@ int cmp(const void *e1,const void *e2)
     const Object *s2=(const void *)e2;
     return -1;
 }
-char s[100009];
-char a[100009];
-int b[100009];
+char a[1000009];
+char b[1000009];
+char b1[1000009];
+char temp[1000009];
+char c[1000009];
+int is_big()
+{
+    if(strlen(a)<strlen(b))
+    {
+        return -1;
+    }
+    else
+    {
+        if(strlen(a)==strlen(b))
+        {
+            for(int i=0;i<strlen(a);i++)
+            {
+                if(b[i]>a[i])
+                {
+                    return -1;
+                }
+                if(b[i]<a[i])
+                {
+                    return 1;
+                }
+            }
+            return 2;
+        }
+        return 1;
+    }
+}
+int A[1000009];
+int B[1000009];
+int C[1000009];
 int main()
 {
-    fgets(a, sizeof(a), stdin);
+    scanf("%s",a);
+    scanf("%s",b);
+    if(is_big()==2)
+    {
+        printf("0");
+        return 0;
+    }
+    if(is_big()==-1)
+    {
+        printf("-");
+        strcpy(temp, a);
+        strcpy(a, b);
+        strcpy(b, temp);
+    }
+    for(int i=0;i<strlen(a)+10;i++)
+    {
+        b1[i] = '0';
+    }
+    for(int i=0;i<strlen(b);i++)
+    {
+        b1[strlen(a)-1-i] = b[strlen(b) -1 -i];
+    }
     int len = strlen(a);
-    int i=0;
-    int j=0;
-    int k=0;
+    for(int i=0;i<len;i++)
+    {
+        A[i] = a[i] - '0';
+        B[i] = b1[i] - '0';
+    }
+    for(int i=0;i<strlen(a);i++)
+    {
+        if(A[strlen(a)-1-i]>=B[strlen(a)-1-i])
+        {
+            C[strlen(a)-1-i] =A[strlen(a)-1-i] - B[strlen(a)-1-i];
+        }
+        else
+        {
+            A[strlen(a)-2-i]--;
+            C[strlen(a)-1-i] =A[strlen(a)-1-i] - B[strlen(a)-1-i]+10;
+        }
+    }
     int flag =0;
-    for(i=0;i<len;i++)
+    for(int i=0;i<len;i++)
     {
-        if(a[i]<='9'&&a[i]>='0')
+        if(C[i]==0)
         {
-            if(flag == 0)
+            if(flag==1)
             {
-                b[j] = a[i] - '0';
-                j++;
-                flag =1;
-            }
-            else
-            {
-                b[j-1] = b[j-1]*10 +a[i] - '0';
-                flag =1;
-            }
-        }
-        else if(a[i]=='*'||a[i]=='-'||a[i]=='+'||a[i]=='/')
-        {
-            s[k] = a[i];
-            k++;
-            flag =0;
-        }
-    }
-    i=0;
-    while(i<k)
-    {
-        if(s[i]=='*'||s[i]=='/')
-        {
-            if(s[i]=='*')
-            {
-                b[i] = b[i]*b[i+1];
-            }
-            else
-            {
-                b[i] = b[i]/b[i+1];
-            }
-            k--;
-            j--;
-            for(int q=i;q<k;q++)
-            {
-                s[q] = s[q+1];
-            }
-            for(int q=i+1;q<j;q++)
-            {
-                b[q] = b[q+1];
+                printf("%d",C[i]);
             }
         }
         else
         {
-            i++;
+            printf("%d",C[i]);
+            flag =1;
         }
     }
-    i=0;
-    while(i<k)
-    {
-        if(s[i]=='+'||s[i]=='-')
-        {
-            if(s[i]=='+')
-            {
-                b[i] = b[i]+b[i+1];
-            }
-            else
-            {
-                b[i] = b[i]-b[i+1];
-            }
-            k--;
-            j--;
-            for(int q=i;q<k;q++)
-            {
-                s[q] = s[q+1];
-            }
-            for(int q=i+1;q<j;q++)
-            {
-                b[q] = b[q+1];
-            }
-        }
-        else
-        {
-            i++;
-        }
-    }
-    printf("%d",b[0]);
+    printf("\n");
     return 0;
 }
